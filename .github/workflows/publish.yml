@@ -1,0 +1,57 @@
+name: Multi Platform Publisher
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'articles/**'
+  workflow_dispatch: # 手動実行も可能
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: |
+        npm install
+        npm install -g zenn-cli
+        npm install axios gray-matter js-yaml
+        
+    - name: Convert articles
+      run: |
+        echo "Converting articles..."
+        node scripts/convert-articles.js
+        
+    - name: Publish to APIs
+      env:
+        QIITA_API_TOKEN: ${{ secrets.QIITA_API_TOKEN }}
+        DEV_TO_API_KEY: ${{ secrets.DEV_TO_API_KEY }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        echo "Publishing articles..."
+        node scripts/publish-articles.js
+        
+    - name: Commit converted articles
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git pull --no-rebase
+        git add config/published-articles.json
+        
+        # 変更がある場合のみコミット
+        if ! git diff --staged --quiet; then
+          git commit -m "Auto-converted articles [skip ci]"
+          git push
+        else
+          echo "No changes to commit"
+        fi

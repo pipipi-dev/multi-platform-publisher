@@ -1,0 +1,47 @@
+{
+  "name": "multi-platform-publisher",
+  "version": "1.0.0",
+  "description": "Write once, publish everywhere - Automated article publishing to Zenn, Qiita, and Dev.to",
+  "main": "index.js",
+  "scripts": {
+    "convert": "node scripts/convert-articles.js",
+    "publish": "node scripts/publish-articles.js",
+    "publish:dry": "echo '🧪 Dry run mode - no actual publishing' && npm run convert",
+    "preview:zenn": "npx zenn preview",
+    "preview:qiita": "npm run convert && npx qiita preview --root qiita --config config/qiita.config.json",
+    "preview:all": "concurrently \"npm run preview:zenn\" \"npm run preview:qiita\"",
+    "convert:qiita": "node -e \"const {getPublishedArticles, convertToQiita} = require('./scripts/convert-articles'); console.log('Qiita変換のみ実行...');\"",
+    "convert:devto": "node -e \"const {getPublishedArticles, convertToDevTo} = require('./scripts/convert-articles'); console.log('Dev.to変換のみ実行...');\"",
+    "validate": "node -e \"console.log('記事構造検証...');\""
+  },
+  "keywords": [
+    "blog",
+    "zenn",
+    "qiita",
+    "dev.to",
+    "cross-platform",
+    "automation",
+    "publishing"
+  ],
+  "author": "pipipi-dev",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "dotenv": "^16.6.1",
+    "gray-matter": "^4.0.3",
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {
+    "@qiita/qiita-cli": "^1.0.0",
+    "concurrently": "^8.2.0",
+    "zenn-cli": "^0.1.150"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pipipi-dev/multi-platform-publisher.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pipipi-dev/multi-platform-publisher/issues"
+  },
+  "homepage": "https://github.com/pipipi-dev/multi-platform-publisher#readme"
+}
