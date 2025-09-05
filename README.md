@@ -1,2 +1,2 @@
-# cross-platform-blog
-Automated blog posting to Zenn, Qiita, and Dev.to from a single repository
+# multi-platform-publisher
+Write once, publish everywhere - Automated article publishing to Zenn, Qiita, and Dev.to
