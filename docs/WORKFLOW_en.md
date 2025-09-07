@@ -46,11 +46,53 @@ This article covers...
 
 ### Image Management
 
-Place images in the `images/` directory and reference them in articles using this format:
+#### Image File Placement
+Place images in the `images/` directory. Recommended naming convention:
+
+```bash
+# Recommended naming pattern
+images/YYYYMMDD-01-description.png
+images/YYYYMMDD-02-another-image.jpg
+```
+
+#### Image Reference in Articles
+Reference images using GitHub Raw URL absolute paths:
 
 ```markdown
-![Screenshot](https://raw.githubusercontent.com/{your-username}/multi-platform-publisher/main/images/my-screenshot.png)
+![Image Description](https://raw.githubusercontent.com/{your-username}/multi-platform-publisher/main/images/filename.png)
+
+*Optional image caption*
 ```
+
+### Automatic Syntax Conversion
+
+The system automatically converts Zenn-specific syntax for each platform:
+
+#### Message Box Conversion
+
+**Zenn Format (Original Article):**
+```markdown
+:::message
+Notes and information go here
+:::
+
+:::message alert
+Important warnings go here
+:::
+```
+
+**Qiita Format (Auto-converted):**
+```markdown
+:::note warn
+Notes and information go here
+:::
+
+:::note alert
+Important warnings go here
+:::
+```
+
+> **📝 Writing Note**: Write articles in Zenn format. Platform-specific conversions are handled automatically.
 
 ---
 
@@ -163,6 +205,9 @@ npm run preview:all
 # Convert articles (dry run)
 npm run convert
 
+# Test all article conversion (development/testing)
+node scripts/convert-articles.js --test
+
 # Test publishing (dry run)
 npm run publish:dry
 ```
@@ -181,6 +226,9 @@ npm run publish:dry
 # Check conversion with detailed error output
 npm run convert
 
+# Test all article conversion (development/testing)
+node scripts/convert-articles.js --test
+
 # Check specific file syntax
 npx js-yaml articles/my-article.md
 ```
@@ -190,4 +238,4 @@ npx js-yaml articles/my-article.md
 **Cause**: Image path configuration error
 **Solution**: 
 - Ensure images are in `images/` directory
-- Use GitHub absolute URL: `https://raw.githubusercontent.com/{your-username}/multi-platform-publisher/main/images/filename.png`
+- Verify GitHub Raw URL absolute paths are used correctly

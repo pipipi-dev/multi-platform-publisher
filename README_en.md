@@ -137,6 +137,8 @@ Your article content goes here...
 1. **Article Detection**: GitHub Actions detects new/modified articles in `articles/`
 2. **Metadata Parsing**: Extracts Zenn frontmatter and converts for each platform
 3. **Content Conversion**: Adjusts content to meet platform-specific requirements
+   - **Syntax Conversion**: Zenn message boxes → Qiita note boxes
+   - **Metadata Transformation**: Platform-specific format adjustments
 4. **API Publishing**: Creates/updates articles using platform APIs
 5. **Sync Management**: Maintains consistency across all platforms
 
@@ -167,6 +169,9 @@ npm install
 # Run conversion scripts locally
 npm run convert
 
+# Test all article conversion (ignore Git diff)
+node scripts/convert-articles.js --test
+
 # Test publishing (dry run)
 npm run publish:dry
 
@@ -184,6 +189,8 @@ npm run preview:qiita
 
 The `scripts/` directory contains conversion utilities:
 - `convert-articles.js` - Converts from Zenn to platform-specific formats
+  - Normal mode: Converts only Git-diff detected articles
+  - Test mode: `--test` option to convert all articles
 - `publish-articles.js` - Handles API publishing to each platform
 
 ## 📚 Reference Documentation

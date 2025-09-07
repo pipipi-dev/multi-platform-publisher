@@ -43,11 +43,53 @@ platforms:
 
 ### 画像管理
 
-画像は `images/` ディレクトリに配置し、記事内では以下の形式で参照します：
+#### 画像ファイルの配置
+画像は `images/` ディレクトリに配置します。推奨命名規則：
+
+```bash
+# 推奨命名パターン
+images/YYYYMMDD-01-description.png
+images/YYYYMMDD-02-another-image.jpg
+```
+
+#### 記事内での画像参照
+記事内では GitHub Raw URL の絶対パスで参照します：
 
 ```markdown
-![スクリーンショット](https://raw.githubusercontent.com/{your-username}/multi-platform-publisher/main/images/my-screenshot.png)
+![画像の説明](https://raw.githubusercontent.com/{your-username}/multi-platform-publisher/main/images/filename.png)
+
+*画像の補足説明（オプション）*
 ```
+
+### 独自記法の自動変換
+
+システムは Zenn 独自記法を各プラットフォーム向けに自動変換します：
+
+#### メッセージボックスの変換
+
+**Zenn 形式（元記事）:**
+```markdown
+:::message
+注意事項をここに記載
+:::
+
+:::message alert
+重要な警告をここに記載
+:::
+```
+
+**Qiita 形式（自動変換後）:**
+```markdown
+:::note warn
+注意事項をここに記載
+:::
+
+:::note alert
+重要な警告をここに記載
+:::
+```
+
+> **📝 執筆時の注意**: 記事は Zenn 形式で執筆してください。各プラットフォーム向けの変換は自動で行われます。
 
 ---
 
@@ -159,6 +201,9 @@ npm run preview:all
 # 記事変換（ドライラン）
 npm run convert
 
+# 全記事変換テスト（Git差分無関係）
+node scripts/convert-articles.js --test
+
 # 投稿テスト（ドライラン）
 npm run publish:dry
 ```
@@ -177,6 +222,9 @@ npm run publish:dry
 # 記事変換で詳細エラー確認
 npm run convert
 
+# 全記事の変換動作確認（開発・テスト時）
+node scripts/convert-articles.js --test
+
 # 特定ファイルの構文確認
 npx js-yaml articles/my-article.md
 ```
@@ -186,4 +234,4 @@ npx js-yaml articles/my-article.md
 **原因**: 画像パスの設定ミス
 **解決法**: 
 - 画像が `images/` ディレクトリにあることを確認
-- GitHubの絶対URL使用: `https://raw.githubusercontent.com/{your-username}/multi-platform-publisher/main/images/filename.png`
+- GitHub Raw URL の絶対パスで記述されていることを確認

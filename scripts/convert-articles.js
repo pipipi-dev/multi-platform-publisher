@@ -4,7 +4,13 @@ const matter = require('gray-matter');
 const { execSync } = require('child_process');
 
 // Git差分から変更された記事のみ取得
-function getModifiedArticles() {
+function getModifiedArticles(forceAll = false) {
+  // テストモード：全記事を対象とする
+  if (forceAll) {
+    console.log('🧪 テストモード: 全記事を変換対象とします');
+    return getAllArticlesForConversion();
+  }
+  
   try {
     // 前回コミットから変更されたarticlesファイル一覧を取得
     const gitDiffCommand = 'git diff --name-only HEAD~1 HEAD -- articles/';
@@ -99,11 +105,33 @@ slide: false`;
   
   let qiitaContent = content;
   
-  // GitHub画像パスをrawコンテンツURLに変換
+  // ZennメッセージボックスをQiita形式に変換
+  
+  // 1. :::message → :::note warn（黄色→黄色）
+  const messageCount = (qiitaContent.match(/:::message\r?\n/g) || []).length;
+  if (messageCount > 0) {
+    console.log(`    ℹ️  ${messageCount}個のZenn messageボックスを検出`);
+  }
   qiitaContent = qiitaContent.replace(
-    /!\[(.*?)\]\(\/images\/(.*?)\)/g, 
-    `![$1](https://raw.githubusercontent.com/pipipi-dev/multi-platform-publisher/main/images/$2)`
+    /:::message\r?\n([\s\S]*?):::/g,
+    ':::note warn\n$1:::'
   );
+  
+  // 2. :::message alert → :::note alert（赤→赤）
+  const alertCount = (qiitaContent.match(/:::message alert/g) || []).length;
+  if (alertCount > 0) {
+    console.log(`    ℹ️  ${alertCount}個のZenn alertボックスを検出`);
+  }
+  qiitaContent = qiitaContent.replace(
+    /:::message alert\r?\n([\s\S]*?):::/g,
+    ':::note alert\n$1:::'
+  );
+  
+  const convertedCount = (qiitaContent.match(/:::note (warn|alert)/g) || []).length;
+  if (alertCount + messageCount > 0 && convertedCount > 0) {
+    console.log(`    ✅ ${convertedCount}個のQiitaノートボックスに変換成功`);
+  }
+  
   
   return {
     frontmatter: qiitaFrontmatterYaml,
@@ -131,11 +159,6 @@ function convertToDevTo(article) {
   
   let devtoContent = content;
   
-  // GitHub画像パスをrawコンテンツURLに変換
-  devtoContent = devtoContent.replace(
-    /!\[(.*?)\]\(\/images\/(.*?)\)/g, 
-    `![$1](https://raw.githubusercontent.com/pipipi-dev/multi-platform-publisher/main/images/$2)`
-  );
   
   const frontmatterStr = Object.entries(devtoFrontmatter)
     .map(([key, value]) => {
@@ -158,8 +181,16 @@ function convertToDevTo(article) {
 function main() {
   console.log('🔄 記事変換を開始...');
   
+  // コマンドライン引数をチェック
+  const args = process.argv.slice(2);
+  const isTestMode = args.includes('--test') || args.includes('--all');
+  
+  if (isTestMode) {
+    console.log('🧪 テストモードが有効です');
+  }
+  
   // 初回プッシュまたはGit差分取得失敗時は全記事、通常時は差分のみ
-  const articles = getModifiedArticles();
+  const articles = getModifiedArticles(isTestMode);
   
   if (articles.length === 0) {
     console.log('✅ 変更された記事がありません。変換をスキップします。');
