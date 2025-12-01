@@ -94,13 +94,13 @@ function convertToQiita(article) {
   
   // Qiita用のYAMLフロントマターを作成（標準フォーマットに準拠）
   const qiitaTags = frontmatter.topics ? frontmatter.topics.map(tag => `  - ${tag}`).join('\n') : '';
-  const qiitaFrontmatterYaml = `title: ${frontmatter.title}
+  const qiitaFrontmatterYaml = `title: "${frontmatter.title}"
 tags:
 ${qiitaTags}
 private: false
 updated_at: ""
-id: null
-organization_url_name: null
+id: ""
+organization_url_name: ""
 slide: false`;
   
   let qiitaContent = content;
