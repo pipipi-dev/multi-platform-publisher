@@ -154,7 +154,7 @@ function convertToDevTo(article) {
     published: true,
     tags: frontmatter.topics ? frontmatter.topics.join(', ') : '',
     canonical_url: null,
-    description: `${content.substring(0, 150)}...`
+    description: content.replace(/[\r\n]+/g, ' ').replace(/"/g, '\\"').substring(0, 150).trim() + '...'
   };
   
   let devtoContent = content;
