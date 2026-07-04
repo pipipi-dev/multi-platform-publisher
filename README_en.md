@@ -1,6 +1,6 @@
 # Multi Platform Publisher 🚀
 
-**Write once, publish everywhere** - Automated article publishing to Zenn, Qiita, and Dev.to from a single repository.
+**Write once, publish everywhere** - Automated article publishing to Zenn, Qiita, Dev.to, and Memoreru from a single repository.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -10,7 +10,7 @@
 
 - **📝 Single Source**: Write articles once in Zenn format
 - **🤖 Auto Publishing**: Automatically publish to multiple platforms
-- **🌐 Multi-Platform**: Supports Zenn, Qiita, and Dev.to
+- **🌐 Multi-Platform**: Supports Zenn, Qiita, Dev.to, and Memoreru
 - **🏷️ Smart Metadata**: Convert platform-specific metadata automatically
 - **🖼️ Image Management**: Centralized image hosting via GitHub
 - **🔄 Sync Updates**: Keep articles synchronized across platforms
@@ -69,8 +69,9 @@ published: true  # Zenn publishing setting
 
 # Multi-platform publishing settings
 platforms:
-  qiita: true   # Publish to Qiita
-  devto: true   # Publish to Dev.to
+  qiita: true    # Publish to Qiita
+  devto: true    # Publish to Dev.to
+  memoreru: true # Publish to Memoreru (https://memoreru.com)
 ---
 
 # My Awesome Article
@@ -98,7 +99,7 @@ GitHub Actions will automatically publish to selected platforms.
 
 ### Requirements
 - GitHub account
-- Accounts on platforms you want to publish to (Zenn/Qiita/Dev.to)
+- Accounts on platforms you want to publish to (Zenn/Qiita/Dev.to/Memoreru)
 - API tokens for each platform (as needed)
 
 > **📌 Note**: Platforms without configured tokens will be automatically skipped during publishing.
@@ -119,8 +120,9 @@ published: true  # Zenn publishing setting
 
 # Multi-platform publishing settings
 platforms:
-  qiita: true   # Publish to Qiita
-  devto: true   # Publish to Dev.to
+  qiita: true    # Publish to Qiita
+  devto: true    # Publish to Dev.to
+  memoreru: true # Publish to Memoreru (https://memoreru.com)
 ---
 
 # Article Content

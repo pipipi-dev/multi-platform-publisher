@@ -1,6 +1,6 @@
 # Multi Platform Publisher 🚀
 
-**一度書けば、どこでも投稿** - Zenn、Qiita、Dev.to への自動記事投稿システム
+**一度書けば、どこでも投稿** - Zenn、Qiita、Dev.to、Memoreru への自動記事投稿システム
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -10,7 +10,7 @@
 
 - **📝 単一ソース**: Zenn形式で一度記事を書くだけ
 - **🤖 自動投稿**: 複数プラットフォームに自動で投稿
-- **🌐 マルチプラットフォーム**: Zenn、Qiita、Dev.to に対応
+- **🌐 マルチプラットフォーム**: Zenn、Qiita、Dev.to、Memoreru に対応
 - **🏷️ スマートメタデータ**: プラットフォーム固有のメタデータを自動変換
 - **🖼️ 画像管理**: GitHub 経由で画像を一元管理
 - **🔄 同期更新**: 全プラットフォームで記事を同期保持
@@ -69,8 +69,9 @@ published: true  # Zenn公開設定
 
 # マルチプラットフォーム投稿設定
 platforms:
-  qiita: true   # Qiitaに投稿
-  devto: true   # Dev.toに投稿
+  qiita: true    # Qiitaに投稿
+  devto: true    # Dev.toに投稿
+  memoreru: true # Memoreru (https://memoreru.com) に投稿
 ---
 
 # 素晴らしい記事
@@ -102,7 +103,7 @@ GitHub Actions が自動で：
 
 ### 必要なもの
 - GitHubアカウント
-- 投稿したいプラットフォームのアカウント（Zenn/Qiita/Dev.to）
+- 投稿したいプラットフォームのアカウント（Zenn/Qiita/Dev.to/Memoreru）
 - 各プラットフォームのAPIトークン（必要に応じて）
 
 > **📌 注意**: トークンが設定されていないプラットフォームへの投稿は自動的にスキップされます。
@@ -123,8 +124,9 @@ published: true  # Zenn公開設定
 
 # マルチプラットフォーム投稿設定
 platforms:
-  qiita: true   # Qiitaに投稿
-  devto: true   # Dev.toに投稿
+  qiita: true    # Qiitaに投稿
+  devto: true    # Dev.toに投稿
+  memoreru: true # Memoreru (https://memoreru.com) に投稿
 ---
 
 # 記事の内容
