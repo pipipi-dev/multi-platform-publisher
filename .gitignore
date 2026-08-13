@@ -155,3 +155,7 @@ temp/
 # Auto-generated platform folders (not committed)
 dev-to/
 qiita/
+
+# エージェント用の作業指示 (ローカル専用)
+AGENTS.md
+CLAUDE.md
