@@ -26,7 +26,7 @@
   "author": "pipipi-dev",
   "license": "MIT",
   "dependencies": {
-    "axios": "^1.6.0",
+    "axios": "^1.18.0",
     "dotenv": "^16.6.1",
     "gray-matter": "^4.0.3",
     "js-yaml": "^4.1.0"
