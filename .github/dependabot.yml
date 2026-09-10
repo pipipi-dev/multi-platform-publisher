@@ -1,0 +1,51 @@
+# Dependabot 設定
+#
+# 方針:
+# - weekly schedule (Mon 09:00 JST) で月曜朝にまとめてレビュー
+# - major upgrade は ignore (人間判断)
+# - production / development をそれぞれ 1 グループにまとめ PR 数を抑える
+# - github-actions は別エコシステム、月次更新
+#
+
+version: 2
+updates:
+  # ==========================================================================
+  # npm dependencies
+  # ==========================================================================
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Tokyo"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore(deps)"
+      prefix-development: "chore(deps-dev)"
+      include: "scope"
+    labels:
+      - "dependencies"
+    ignore:
+      # major は人間判断
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+    groups:
+      production-others:
+        dependency-type: "production"
+      development-others:
+        dependency-type: "development"
+
+  # ==========================================================================
+  # GitHub Actions
+  # ==========================================================================
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 2
+    commit-message:
+      prefix: "chore(actions)"
+    labels:
+      - "dependencies"
+      - "github-actions"
