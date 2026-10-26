@@ -32,9 +32,9 @@
     "js-yaml": "^4.3.2"
   },
   "devDependencies": {
-    "@qiita/qiita-cli": "^1.10.0",
+    "@qiita/qiita-cli": "^1.12.0",
     "concurrently": "^8.2.0",
-    "zenn-cli": "^0.5.4"
+    "zenn-cli": "^0.5.7"
   },
   "repository": {
     "type": "git",
